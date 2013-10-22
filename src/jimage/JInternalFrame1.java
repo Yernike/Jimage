@@ -8,6 +8,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.image.BufferedImage;
+import org.jfree.chart.*;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 
 
 /**
@@ -26,10 +35,17 @@ public JInternalFrame1() {
                    
     }
 
+public JInternalFrame1(BufferedImage img) {
+        initComponents();
+        imagen= img;
+    
+}
+
 public void abrir_imagen (BufferedImage img){
     String title = "ImagenSinTitulo";
     JLabel_imagen= new JLabel();
     this.add(JLabel_imagen);
+    
     
     if (img == null){
         abrir_imagen a = new abrir_imagen();
@@ -40,8 +56,9 @@ public void abrir_imagen (BufferedImage img){
     
     if (imagen != null) 
     {
-        setJInternalImageFrame(title, imagen.getHeight(),imagen.getWidth());
+        setJInternalImageFrame(title, imagen.getWidth(),imagen.getHeight());
         //Cargamos el JLabel con la imagen como ImageIcon
+        
         JLabel_set_imagen();
     }
     else {
@@ -50,7 +67,7 @@ public void abrir_imagen (BufferedImage img){
     
 
 }
-    public void setJInternalImageFrame(String title, int height, int width){
+    public void setJInternalImageFrame(String title, int width, int height){
 
         this.setMaximizable(true);
         this.setClosable(true);
@@ -58,9 +75,10 @@ public void abrir_imagen (BufferedImage img){
 
         this.setTitle(title);
         this.setVisible(true);
-        this.setSize(height,width);
+        this.setSize(width, height);
+      
         
-        this.JLabel_imagen.setBounds(0, 0, height, width);
+       
    
 
 }
@@ -69,17 +87,56 @@ public void abrir_imagen (BufferedImage img){
         
         ImageIcon icono =new ImageIcon(imagen);
         JLabel_imagen.setIcon(icono);
+        this.JLabel_imagen.setBounds(0, 0, imagen.getWidth(), imagen.getHeight());
     }
     
     public void pasar_a_bw(){
         pixel_imagen tmp = new pixel_imagen();
-        tmp.toBW(imagen);
+        tmp.img_to_BW(imagen);
         JLabel_set_imagen();   
     }
 
     public void ver_histograma_abs(){
     
-    
+        ChartPanel panel;
+        JFreeChart chart;
+        XYSplineRenderer renderer = new XYSplineRenderer();;
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        
+        ValueAxis x = new NumberAxis();
+        ValueAxis y = new NumberAxis();
+        
+        XYSeries serie = new XYSeries("Datos");
+        XYPlot plot;
+        
+        pixel_imagen tmp = new pixel_imagen();
+        int[] hist = tmp.img_get_histogramaAbs(imagen);
+        
+        for(int fila=0;fila<255;fila++){
+            serie.add(fila, hist[fila]);   
+        }
+        
+        dataset.addSeries(serie);
+        //x.setLabel("Color");
+        //y.setLabel("Veces");
+        chart = ChartFactory.createHistogram("Histograma Absoluto", title, title, dataset, PlotOrientation.VERTICAL, isClosed, closable, isClosed);
+             
+        plot = new XYPlot(dataset,x,y,renderer);
+        plot.isDomainCrosshairVisible();
+        plot.isRangeCrosshairVisible();
+        plot.isRangeGridlinesVisible();
+        
+        
+        //chart = new JFreeChart(plot);
+        //chart.setTitle("Histograma Absoluto");
+        
+        panel = new ChartPanel(chart);
+        panel.setBounds(5,10,400,400);
+        
+        setJInternalImageFrame("Diagrama Absoluto", 450,450);
+        this.add(panel);
+        this.repaint();
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
