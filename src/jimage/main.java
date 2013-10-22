@@ -5,6 +5,9 @@
 package jimage;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 
 
@@ -130,7 +133,16 @@ public class main extends javax.swing.JFrame {
         // ACCION DE ABRIR
         JInternalFrame1 jif1 = new JInternalFrame1();
         jif1.abrir_imagen(null);
+        
         dp.add(jif1);
+        
+        try {
+            jif1.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
    
     }//GEN-LAST:event_jMenuItem1ActionPerformed
    
@@ -157,7 +169,9 @@ public class main extends javax.swing.JFrame {
         JInternalFrame1 bw_ji = new JInternalFrame1();
         bw_ji.abrir_imagen(img);
         bw_ji.pasar_a_bw();
+        
         dp.add(bw_ji);
+        
         
         
         
