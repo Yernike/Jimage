@@ -3,11 +3,9 @@
  * and open the template in the editor.
  */
 package jimage;
-//import abrir_imagen;
-
-import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 
 
 
@@ -50,6 +48,7 @@ public class main extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Jimage - Procesamiento digital de imágenes");
@@ -90,6 +89,15 @@ public class main extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Herramientas");
+
+        jMenuItem5.setText("Convertir a escala de grises");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -107,39 +115,53 @@ public class main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-
+        //ACCION DE GUARDAR
         this.getFocusOwner();
         guardar_imagen a = new guardar_imagen();
         JInternalFrame1 ji = (JInternalFrame1) dp.getSelectedFrame();
-        
-        a.guardar(ji.obtener_imagen());
-        
-        
-        //JInternalFrame img = dp.getSelectedFrame();
-        //img.getComponent(0);
-        
+       // a.guardar(ji.obtener_imagen());
 
-        //a.guardar(dp.getSelectedFrame());
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-    // ACCION DE ABRIR
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // ACCION DE ABRIR
         JInternalFrame1 jif1 = new JInternalFrame1();
-        jif1.abrir_imagen();
+        jif1.abrir_imagen(null);
         dp.add(jif1);
    
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    // ACCION DE GUARDAR COMO
+   
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+         // ACCION DE GUARDAR COMO
         int a=1;
         JInternalFrame1  ddpp = (JInternalFrame1) dp.getSelectedFrame();
-        ddpp.imagen.getRaster();
-        int b=2;
+        //ddpp.imagen.getRaster();
+        //int b=2;
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+    
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        //Convertir a escala de grises
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        //Creo una copia de BufferedImage
+        Graphics g = img.createGraphics();
+        g.drawImage(tji.imagen, 0, 0, null);
+        g.dispose();
+        
+        //Se crea una nueva ventana con la imagen original y se le aplica el B&W
+        JInternalFrame1 bw_ji = new JInternalFrame1();
+        bw_ji.abrir_imagen(img);
+        bw_ji.pasar_a_bw();
+        dp.add(bw_ji);
+        
+        
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     
 /**
@@ -186,5 +208,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
