@@ -51,8 +51,12 @@ public class main extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Jimage - Procesamiento digital de imágenes");
@@ -85,6 +89,11 @@ public class main extends javax.swing.JFrame {
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Salir");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -99,6 +108,12 @@ public class main extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem6);
 
+        jMenuItem7.setText("Histograma acumulativo");
+        jMenu2.add(jMenuItem7);
+
+        jMenuItem8.setText("Info de imagen");
+        jMenu2.add(jMenuItem8);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Herramientas");
@@ -110,6 +125,12 @@ public class main extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem5);
+
+        jMenuItem9.setText("Brillo / Contraste");
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setText("Entropía");
+        jMenu3.add(jMenuItem10);
 
         jMenuBar1.add(jMenu3);
 
@@ -123,26 +144,26 @@ public class main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        //ACCION DE GUARDAR
+        // ARCHIVO -> GUARDAR
         this.getFocusOwner();
-        guardar_imagen a = new guardar_imagen();
+        open_save_image a = new open_save_image();
         JInternalFrame1 ji = (JInternalFrame1) dp.getSelectedFrame();
-       // a.guardar(ji.obtener_imagen());
+       a.guardar_imagen(ji.imagen);
 
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // ACCION DE ABRIR
+        // ARCHIVO -> ABRIR
         JInternalFrame1 jif1 = new JInternalFrame1();
-        jif1.abrir_imagen(null);
+        jif1.Ji_abrir_imagen(null);
         
         dp.add(jif1);
         
@@ -151,22 +172,16 @@ public class main extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-   
     }//GEN-LAST:event_jMenuItem1ActionPerformed
    
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         // ACCION DE GUARDAR COMO
+         // ARCHIVO -> GUARDAR COMO
         int a=1;
         JInternalFrame1  ddpp = (JInternalFrame1) dp.getSelectedFrame();
-        //ddpp.imagen.getRaster();
-        //int b=2;
-        
     }//GEN-LAST:event_jMenuItem3ActionPerformed
     
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        //Convertir a escala de grises
+        //HERRAMIENTAS -> Convertir a escala de grises
         JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
         BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
         
@@ -177,8 +192,8 @@ public class main extends javax.swing.JFrame {
         
         //Se crea una nueva ventana con la imagen original y se le aplica el B&W
         JInternalFrame1 bw_ji = new JInternalFrame1();
-        bw_ji.abrir_imagen(img);
-        bw_ji.pasar_a_bw();
+        bw_ji.Ji_abrir_imagen(img);
+        bw_ji.Ji_to_bw();
         
         dp.add(bw_ji);
         
@@ -188,12 +203,18 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // VER DIAGRAMA ABSOLUTO
+        // VER -> DIAGRAMA ABSOLUTO
          JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
         JInternalFrame1 jif1 = new JInternalFrame1(tji.imagen);
-        jif1.ver_histograma_abs();
+        jif1.Ji_histograma_abs();
         dp.add(jif1);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       // SALIR
+        System.exit(0);
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     
 /**
@@ -237,10 +258,14 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

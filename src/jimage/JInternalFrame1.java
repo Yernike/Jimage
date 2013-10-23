@@ -37,37 +37,34 @@ public JInternalFrame1() {
 
 public JInternalFrame1(BufferedImage img) {
         initComponents();
-        imagen= img;
-    
+        imagen= img;   
 }
 
-public void abrir_imagen (BufferedImage img){
+public void Ji_abrir_imagen (BufferedImage img){
     String title = "ImagenSinTitulo";
     JLabel_imagen= new JLabel();
     this.add(JLabel_imagen);
     
     
     if (img == null){
-        abrir_imagen a = new abrir_imagen();
-        imagen= a.LeerImagen();
+        open_save_image a = new open_save_image();
+        imagen= a.abrir_imagen();
         title = a.path.substring(a.path.lastIndexOf("/")+1);
     }
     else imagen = img;
     
     if (imagen != null) 
     {
-        setJInternalImageFrame(title, imagen.getWidth(),imagen.getHeight());
+        setJInternalFrame(title, imagen.getWidth(),imagen.getHeight());
         //Cargamos el JLabel con la imagen como ImageIcon
         
         JLabel_set_imagen();
     }
-    else {
- 
-    }
+
     
 
 }
-    public void setJInternalImageFrame(String title, int width, int height){
+    public void setJInternalFrame(String title, int width, int height){
 
         this.setMaximizable(true);
         this.setClosable(true);
@@ -75,12 +72,8 @@ public void abrir_imagen (BufferedImage img){
 
         this.setTitle(title);
         this.setVisible(true);
-        this.setSize(width, height);
-      
-        
-       
-   
-
+        this.setSize(width, height);  
+             
 }
         
     public void JLabel_set_imagen(){
@@ -90,13 +83,13 @@ public void abrir_imagen (BufferedImage img){
         this.JLabel_imagen.setBounds(0, 0, imagen.getWidth(), imagen.getHeight());
     }
     
-    public void pasar_a_bw(){
+    public void Ji_to_bw(){
         pixel_imagen tmp = new pixel_imagen();
         tmp.img_to_BW(imagen);
         JLabel_set_imagen();   
     }
 
-    public void ver_histograma_abs(){
+    public void Ji_histograma_abs(){
     
         ChartPanel panel;
         JFreeChart chart;
@@ -133,7 +126,7 @@ public void abrir_imagen (BufferedImage img){
         panel = new ChartPanel(chart);
         panel.setBounds(5,10,400,400);
         
-        setJInternalImageFrame("Diagrama Absoluto", 450,450);
+        setJInternalFrame("Diagrama Absoluto", 450,450);
         this.add(panel);
         this.repaint();
         
