@@ -109,6 +109,11 @@ public class main extends javax.swing.JFrame {
         jMenu2.add(jMenuItem6);
 
         jMenuItem7.setText("Histograma acumulativo");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem7);
 
         jMenuItem8.setText("Info de imagen");
@@ -144,7 +149,7 @@ public class main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 471, Short.MAX_VALUE)
         );
 
         pack();
@@ -215,6 +220,14 @@ public class main extends javax.swing.JFrame {
         System.exit(0);
         
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+       // VER -> DIAGRAMA ACUMULATIVO
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        JInternalFrame1 jif1 = new JInternalFrame1(tji.imagen);
+        jif1.Ji_histograma_acu();
+        dp.add(jif1); 
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     
 /**

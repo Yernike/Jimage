@@ -45,6 +45,18 @@ public class pixel_imagen {
        return sumArray;
     }
     
+    public int[] img_get_histogramaAcu(BufferedImage img){
+         
+        int [] acu_array = img_get_histogramaAbs(img);
+        
+        for (int i=1; i<acu_array.length; i++){
+            acu_array[i] += acu_array[i-1];        
+        }
+        
+    return acu_array;
+    
+    }
+    
     
     
     //GRIS = 0.299 R + 0.587 G + 0.114 B

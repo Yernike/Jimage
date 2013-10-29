@@ -90,6 +90,19 @@ public void Ji_abrir_imagen (BufferedImage img){
     }
 
     public void Ji_histograma_abs(){
+        pixel_imagen tmp = new pixel_imagen();
+        int[] hist = tmp.img_get_histogramaAbs(imagen);
+        Ji_draw_histograma(hist, "Histograma Absoluto");
+        
+    }
+    
+      public void Ji_histograma_acu(){
+        pixel_imagen tmp = new pixel_imagen();
+        int[] hist = tmp.img_get_histogramaAcu(imagen);
+        Ji_draw_histograma(hist, "Histograma Acumulativo");
+        
+    }
+    public void Ji_draw_histograma(int[] hist, String titulo){
     
         ChartPanel panel;
         JFreeChart chart;
@@ -102,8 +115,7 @@ public void Ji_abrir_imagen (BufferedImage img){
         XYSeries serie = new XYSeries("Datos");
         XYPlot plot;
         
-        pixel_imagen tmp = new pixel_imagen();
-        int[] hist = tmp.img_get_histogramaAbs(imagen);
+        
         
         for(int fila=0;fila<255;fila++){
             serie.add(fila, hist[fila]);   
@@ -112,13 +124,14 @@ public void Ji_abrir_imagen (BufferedImage img){
         dataset.addSeries(serie);
         //x.setLabel("Color");
         //y.setLabel("Veces");
-        chart = ChartFactory.createHistogram("Histograma Absoluto", title, title, dataset, PlotOrientation.VERTICAL, isClosed, closable, isClosed);
+        chart = ChartFactory.createHistogram(titulo, title, title, dataset, PlotOrientation.VERTICAL, isClosed, closable, isClosed);
              
         plot = new XYPlot(dataset,x,y,renderer);
         plot.isDomainCrosshairVisible();
         plot.isRangeCrosshairVisible();
         plot.isRangeGridlinesVisible();
-        
+        plot.isDomainZoomable();
+        plot.isRangeZoomable();
         
         //chart = new JFreeChart(plot);
         //chart.setTitle("Histograma Absoluto");
@@ -126,7 +139,7 @@ public void Ji_abrir_imagen (BufferedImage img){
         panel = new ChartPanel(chart);
         panel.setBounds(5,10,400,400);
         
-        setJInternalFrame("Diagrama Absoluto", 450,450);
+        setJInternalFrame("Histograma", 450,450);
         this.add(panel);
         this.repaint();
         
