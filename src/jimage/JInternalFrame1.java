@@ -151,12 +151,12 @@ public void Ji_abrir_imagen (BufferedImage img){
     public void Ji_get_mouse_xy(){
         
         Point p = new Point();
-        p = new MouseInfo.
+        //p = new MouseInfo.
         
         
-        pixel_imagen tmp = new pixel_imagen();
-        int[] hist = tmp.img_get_histogramaAcu(imagen);
-        Ji_draw_histograma(hist, "Histograma Acumulativo");
+        //pixel_imagen tmp = new pixel_imagen();
+       // int[] hist = tmp.img_get_histogramaAcu(imagen);
+        //Ji_draw_histograma(hist, "Histograma Acumulativo");
         
     }
     /**
