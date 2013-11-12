@@ -5,6 +5,7 @@
 package jimage;
 
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -60,6 +61,36 @@ public class pixel_imagen {
     
     
     //GRIS = 0.299 R + 0.587 G + 0.114 B
+  
+    
+    public void brillo (BufferedImage img){
+    	//BufferedImage ima = img;
+    	
+        String StringBrillo = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo que quiere aumentar");
+        double brillo = Double.parseDouble(StringBrillo);
+        brillo = brillo / 100;
+        double[] iArray = null;
+        
+        for (int x=0; x<img.getRaster().getWidth(); x++){
+            for (int y=0; y<img.getRaster().getHeight(); y++){
+            	iArray = img.getRaster().getPixel(x, y, iArray);
+            	brillo = brillo * iArray[0];
+                
+               iArray[0] = brillo;
+               iArray[1] = brillo;
+               iArray[2] = brillo;
+               img.getRaster().setPixel(x, y, iArray);
+            	
+            }
+        }
+
+
+    	
+    	
+    	//return ima;
+    	
+    }
+    
     
     
 }
