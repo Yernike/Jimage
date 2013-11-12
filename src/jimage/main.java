@@ -4,6 +4,8 @@
  */
 package jimage;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -227,6 +229,8 @@ public class main extends javax.swing.JFrame {
         JInternalFrame1 jif1 = new JInternalFrame1(tji.imagen);
         jif1.Ji_histograma_acu();
         dp.add(jif1); 
+        
+
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     

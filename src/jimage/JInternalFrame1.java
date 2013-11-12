@@ -4,6 +4,9 @@
  */
 package jimage;
 
+import java.awt.MouseInfo;
+import java.awt.Dimension;
+import java.awt.Point;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -102,7 +105,7 @@ public void Ji_abrir_imagen (BufferedImage img){
         Ji_draw_histograma(hist, "Histograma Acumulativo");
         
     }
-    public void Ji_draw_histograma(int[] hist, String titulo){
+    private void Ji_draw_histograma(int[] hist, String titulo){
     
         ChartPanel panel;
         JFreeChart chart;
@@ -142,6 +145,18 @@ public void Ji_abrir_imagen (BufferedImage img){
         setJInternalFrame("Histograma", 450,450);
         this.add(panel);
         this.repaint();
+        
+    }
+    
+    public void Ji_get_mouse_xy(){
+        
+        Point p = new Point();
+        p = new MouseInfo.
+        
+        
+        pixel_imagen tmp = new pixel_imagen();
+        int[] hist = tmp.img_get_histogramaAcu(imagen);
+        Ji_draw_histograma(hist, "Histograma Acumulativo");
         
     }
     /**
