@@ -76,6 +76,11 @@ public class pixel_imagen {
             	iArray = img.getRaster().getPixel(x, y, iArray);
             	brillo = brillo * iArray[0];
                 
+                if (brillo > 255)
+                    brillo = 255;
+                if (brillo < 0)
+                    brillo = 0;
+                
                iArray[0] = brillo;
                iArray[1] = brillo;
                iArray[2] = brillo;
