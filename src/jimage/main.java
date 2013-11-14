@@ -2,10 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jimage;
+
+/**
+ *
+ * @author leo
+ */
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -59,6 +65,7 @@ public class main extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Jimage - Procesamiento digital de imágenes");
@@ -117,8 +124,13 @@ public class main extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setText("Info de imagen");
+        jMenuItem8.setText("Info de imagen");       
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        
         jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
@@ -133,8 +145,23 @@ public class main extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem5);
 
-        jMenuItem9.setText("Brillo / Contraste");
+        jMenuItem9.setText("Brillo"); //Contraste
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        
         jMenu3.add(jMenuItem9);
+        
+        jMenuItem11.setText("Contraste"); //Contraste
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem11);
+        
 
         jMenuItem10.setText("Entropía");
         jMenu3.add(jMenuItem10);
@@ -229,16 +256,63 @@ public class main extends javax.swing.JFrame {
         JInternalFrame1 jif1 = new JInternalFrame1(tji.imagen);
         jif1.Ji_histograma_acu();
         dp.add(jif1); 
-        
-
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+    
+    
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    	//HERRAMIENTAS -> Convertir a escala de grises
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        //Creo una copia de BufferedImage
+        Graphics g = img.createGraphics();
+        g.drawImage(tji.imagen, 0, 0, null);
+        g.dispose();
+        
+        //Se crea una nueva ventana con la imagen original y se le aplica el B&W
+        JInternalFrame1 brillo_ji = new JInternalFrame1();
+        brillo_ji.Ji_abrir_imagen(img);
+        brillo_ji.Ji_brillo();
+        
+        dp.add(brillo_ji);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        
+        // AQUIIIIIIIIII
+        
+        
+    }
+    
+    
 
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    	//HERRAMIENTAS -> Convertir a escala de grises
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        //Creo una copia de BufferedImage
+        Graphics g = img.createGraphics();
+        g.drawImage(tji.imagen, 0, 0, null);
+        g.dispose();
+        
+        //Se crea una nueva ventana con la imagen original y se le aplica el B&W
+        JInternalFrame1 contraste_ji = new JInternalFrame1();
+        contraste_ji.Ji_abrir_imagen(img);
+        contraste_ji.Ji_contraste();
+        
+        dp.add(contraste_ji);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    
+    
     
 /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+       
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -276,6 +350,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

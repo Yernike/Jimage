@@ -2,14 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jimage;
+
+/**
+ *
+ * @author leo
+ */
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 
 import java.awt.image.BufferedImage;
+
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author yeray
+ * @authors yeray, leti, leo.
  */
 public class pixel_imagen {
 
@@ -58,44 +69,88 @@ public class pixel_imagen {
     
     }
     
-    
-    
-    //GRIS = 0.299 R + 0.587 G + 0.114 B
-  
-    
     public void brillo (BufferedImage img){
-    	//BufferedImage ima = img;
     	
-        String StringBrillo = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo que quiere aumentar");
+        String StringBrillo = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo");
         double brillo = Double.parseDouble(StringBrillo);
         brillo = brillo / 100;
-        double [] iArray = null;
+        double pBrillo = 0.0;
+        double[] iArray = null;
         
         for (int x=0; x<img.getRaster().getWidth(); x++){
             for (int y=0; y<img.getRaster().getHeight(); y++){
             	iArray = img.getRaster().getPixel(x, y, iArray);
-            	brillo = brillo * iArray[0];
+            	pBrillo = brillo * iArray[0];
                 
-                if (brillo > 255.0)
-                    brillo = 255;
-                if (brillo < 0.0)
-                    brillo = 0;
+                if (pBrillo > 255)
+                    pBrillo = 255;
+                if (pBrillo < 0)
+                    pBrillo = 0;
                 
-               iArray[0] = brillo;
-               iArray[1] = brillo;
-               iArray[2] = brillo;
+               iArray[0] = pBrillo;
+               iArray[1] = pBrillo;
+               iArray[2] = pBrillo;
                img.getRaster().setPixel(x, y, iArray);
             	
             }
         }
-
-
-    	
-    	
-    	//return ima;
     	
     }
     
-    
-    
+    public void contraste (BufferedImage img){
+        String StringContraste = JOptionPane.showInputDialog("Introduzca el nivel de Contraste (+ aumentar) (- disminuir)");
+        double contraste = Double.parseDouble(StringContraste);
+        double pContraste = 0.0;
+        double[] iArray = null;
+        
+        for (int x=0; x<img.getRaster().getWidth(); x++){
+            for (int y=0; y<img.getRaster().getHeight(); y++){
+            	iArray = img.getRaster().getPixel(x, y, iArray);
+                pContraste = contraste + iArray[0];
+                
+                if (pContraste > 255)
+                    pContraste = 255;
+                if (pContraste < 0)
+                    pContraste = 0;
+                
+               iArray[0] = pContraste;
+               iArray[1] = pContraste;
+               iArray[2] = pContraste;
+               img.getRaster().setPixel(x, y, iArray);
+            	
+            }
+        }
+    	
+        
+        
+        
+        
+        
+ 
+    }
+        
+        
+        
+     public void tamanyo (BufferedImage img){
+         int tam = 0;
+         
+         for (int x=0; x<img.getRaster().getWidth(); x++){
+            for (int y=0; y<img.getRaster().getHeight(); y++){
+                tam++;
+                System.out.println ( " tamanio = "+ tam);
+                
+                
+                
+            }
+         }
+         
+         
+         
+     }
+        
 }
+    
+    
+    //GRIS = 0.299 R + 0.587 G + 0.114 B
+    
+

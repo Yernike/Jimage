@@ -2,11 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jimage;
 
-import java.awt.MouseInfo;
-import java.awt.Dimension;
-import java.awt.Point;
+/**
+ *
+ * @author leo
+ */
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -47,6 +52,7 @@ public void Ji_abrir_imagen (BufferedImage img){
     String title = "ImagenSinTitulo";
     JLabel_imagen= new JLabel();
     this.add(JLabel_imagen);
+    
     
     
     if (img == null){
@@ -91,6 +97,18 @@ public void Ji_abrir_imagen (BufferedImage img){
         tmp.img_to_BW(imagen);
         JLabel_set_imagen();   
     }
+    
+    public void Ji_brillo(){
+        pixel_imagen tmp = new pixel_imagen();
+        tmp.brillo(imagen);
+        JLabel_set_imagen();   
+    }
+    
+    public void Ji_contraste(){
+        pixel_imagen tmp = new pixel_imagen();
+        tmp.contraste(imagen);
+        JLabel_set_imagen();   
+    }
 
     public void Ji_histograma_abs(){
         pixel_imagen tmp = new pixel_imagen();
@@ -105,7 +123,7 @@ public void Ji_abrir_imagen (BufferedImage img){
         Ji_draw_histograma(hist, "Histograma Acumulativo");
         
     }
-    private void Ji_draw_histograma(int[] hist, String titulo){
+    public void Ji_draw_histograma(int[] hist, String titulo){
     
         ChartPanel panel;
         JFreeChart chart;
@@ -145,18 +163,6 @@ public void Ji_abrir_imagen (BufferedImage img){
         setJInternalFrame("Histograma", 450,450);
         this.add(panel);
         this.repaint();
-        
-    }
-    
-    public void Ji_get_mouse_xy(){
-        
-        Point p = new Point();
-        //p = new MouseInfo.
-        
-        
-        //pixel_imagen tmp = new pixel_imagen();
-       // int[] hist = tmp.img_get_histogramaAcu(imagen);
-        //Ji_draw_histograma(hist, "Histograma Acumulativo");
         
     }
     /**

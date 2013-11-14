@@ -2,7 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jimage;
+
+/**
+ *
+ * @author leo
+ */
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 
 
 import java.awt.image.BufferedImage;
@@ -51,7 +61,7 @@ public class open_save_image {
 
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "No se puede abrir la imagen");
-        }
+        }    
     return imagen;
     }
     
