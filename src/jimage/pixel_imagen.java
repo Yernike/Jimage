@@ -69,16 +69,16 @@ public class pixel_imagen {
         String StringBrillo = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo que quiere aumentar");
         double brillo = Double.parseDouble(StringBrillo);
         brillo = brillo / 100;
-        double[] iArray = null;
+        double [] iArray = null;
         
         for (int x=0; x<img.getRaster().getWidth(); x++){
             for (int y=0; y<img.getRaster().getHeight(); y++){
             	iArray = img.getRaster().getPixel(x, y, iArray);
             	brillo = brillo * iArray[0];
                 
-                if (brillo > 255)
+                if (brillo > 255.0)
                     brillo = 255;
-                if (brillo < 0)
+                if (brillo < 0.0)
                     brillo = 0;
                 
                iArray[0] = brillo;
