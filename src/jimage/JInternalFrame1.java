@@ -21,10 +21,8 @@ import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
+
 import java.awt.geom.Rectangle2D;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -43,6 +41,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import javax.swing.JOptionPane;
 
 
 
@@ -53,15 +52,16 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class JInternalFrame1 extends javax.swing.JInternalFrame {
 
     JLabel JLabel_imagen;
+    String title = "";
     BufferedImage imagen;
     BufferedImage Imagmemoria;
     BufferedImage imgrecortada;
 
     Graphics2D g2D;
-    float x=0;
-    float y=0;
-    float ancho=0;
-    float alto=0;
+    int x=0;
+    int y=0;
+    int ancho=0;
+    int alto=0;
     
     /**
      * Creates new form JInternalFrame1
@@ -75,7 +75,43 @@ public class JInternalFrame1 extends javax.swing.JInternalFrame {
     
  }
    public void addEventos(final JLabel label){
-  
+  addMouseListener (new MouseListener() {
+   
+   @Override
+   public void mouseReleased(MouseEvent arg0) {
+       
+        ancho = (JLabel_imagen.getMousePosition().x)-x;
+        alto = (JLabel_imagen.getMousePosition().y)-y;
+        if(ancho<0) ancho=0;
+        if(alto<0) alto=0;
+        if(x > imagen.getWidth()) x = imagen.getWidth() - ancho ;
+        if(y > imagen.getHeight()) y = imagen.getHeight() - alto ;        
+        recortar();
+   }
+   
+   @Override
+   public void mousePressed(MouseEvent arg0) {
+        x= JLabel_imagen.getMousePosition().x;
+        y= JLabel_imagen.getMousePosition().y;
+ 
+   }
+   
+   @Override
+   public void mouseExited(MouseEvent arg0) {
+    
+   }
+   
+   @Override
+   public void mouseEntered(MouseEvent arg0) {
+    
+   }
+   
+   @Override
+   public void mouseClicked(MouseEvent arg0) {
+    
+   }
+});
+
   
         addMouseMotionListener(new MouseMotionAdapter(){
             
@@ -98,14 +134,17 @@ public class JInternalFrame1 extends javax.swing.JInternalFrame {
         }catch (NullPointerException a){
   } 
                  }
+            
+           
              
         });
-        
+                
        
  }
   
 public JInternalFrame1() {
         initComponents();
+         
                 
     }
 
@@ -119,8 +158,13 @@ public JInternalFrame1(BufferedImage img) {
         //addMouseListener();
 }
 
+private void recortar (){
+    imagen = imagen.getSubimage(x, y, ancho, alto);
+    JLabel_set_imagen();
+    this.setSize(imagen.getHeight(), imagen.getWidth());
+}
 public void Ji_abrir_imagen (BufferedImage img){
-    String title = "ImagenSinTitulo";
+    title = "ImagenSinTitulo";
     JLabel_imagen= new JLabel();
     this.add(JLabel_imagen);
     
@@ -168,6 +212,13 @@ public void Ji_abrir_imagen (BufferedImage img){
         tmp.img_to_BW(imagen);
         JLabel_set_imagen();   
     }
+    
+    public void Ji_to_eq(){
+        pixel_imagen tmp = new pixel_imagen();
+        tmp.equalize(imagen);
+        JLabel_set_imagen();   
+    }
+
     
     public void Ji_brillo(){
         pixel_imagen tmp = new pixel_imagen();
@@ -245,7 +296,7 @@ public void Ji_abrir_imagen (BufferedImage img){
     }
     
     
-
+/*
     @Override
     protected void paintComponent(Graphics g) {
       Graphics2D g2 = (Graphics2D)g;
@@ -283,7 +334,7 @@ public void Ji_abrir_imagen (BufferedImage img){
     public void mousePressed(MouseEvent e) {
         x = e.getX();
         y = e.getY();
-    }
+    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

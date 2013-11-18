@@ -94,6 +94,7 @@ public class main extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Jimage - Procesamiento digital de imágenes");
@@ -203,6 +204,14 @@ public class main extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem12);
 
+        jMenuItem16.setText("Equalizacion");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem16);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -216,7 +225,7 @@ public class main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 551, Short.MAX_VALUE)
+                .addGap(0, 559, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
@@ -319,11 +328,7 @@ public class main extends javax.swing.JFrame {
     
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         
-        // AQUIIIIIIIIII
-        
-        
     }
-    
     
 
 
@@ -393,12 +398,32 @@ public class main extends javax.swing.JFrame {
         int tama2 = pi.height(tji.imagen); 
         int rangMenor = pi.ranMenor(tji.imagen);
         int rangMayor = pi.ranMayor(tji.imagen);
-        JOptionPane.showInternalMessageDialog(dp, "Tamanio: " +tama1+ " x "+tama2+""
+        JOptionPane.showInternalMessageDialog(dp, "Tipo fichero: "+ tji.title.substring(tji.title.lastIndexOf(".")+1) 
+                + "\nTamañio: " +tama1+ " x "+tama2+""
                 + "\nRango de valores:  ["+rangMenor+"]"+"["+rangMayor+"]"
                 + "\nBrillo medio: " + pi.getBrillo(tji.imagen)
                 + "\nContraste medio: " + pi.getContraste(tji.imagen)); 
     
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+           //HERRAMIENTAS -> Ecualización
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        //Creo una copia de BufferedImage
+        Graphics g = img.createGraphics();
+        g.drawImage(tji.imagen, 0, 0, null);
+        g.dispose();
+        
+        //Se crea una nueva ventana con la imagen original y se le aplica el B&W
+        JInternalFrame1 eq_ji = new JInternalFrame1();
+        eq_ji.Ji_abrir_imagen(img);
+        eq_ji.Ji_to_eq();
+        
+        dp.add(eq_ji); 
+           
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
     
     
     
@@ -449,6 +474,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

@@ -288,6 +288,42 @@ public int height (BufferedImage img){
      
         
 }
+     
+     
+     public void equalize (BufferedImage img){
+         int w = img.getWidth();
+         int h = img.getHeight();
+         int m = w*h;
+         int k = 256;
+         double[] iArray = null;
+         
+         // invocamos al histograma acumulativo.
+         
+         int [] H = img_get_histogramaAbs(img);
+         for (int j = 1; j < H.length; j++){
+             H[j] = H[j-1] + H[j];
+         }
+         
+         //equalize
+         for (int v = 0; v < h; v++){
+             for (int u = 0; u < w; u++){
+                 iArray =img.getRaster().getPixel(u, v, iArray);
+                 int a = (int)iArray[0];
+                 int b = H[a] * (k-1)/m;
+                 if (b > 255)
+                    b = 255;
+                  if (b < 0)
+                    b = 0;
+                 iArray[0] =b;
+                 iArray[1] =b;
+                 iArray[2] =b;
+                 img.getRaster().setPixel(u, v, iArray);
+             }
+         }
+         
+         
+         
+     }
         
 }
     
