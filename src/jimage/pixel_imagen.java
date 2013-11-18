@@ -18,6 +18,7 @@ package jimage;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import javax.swing.JDesktopPane;
 
 import javax.swing.JOptionPane;
 
@@ -165,14 +166,15 @@ public class pixel_imagen {
  
     }
         
-    public void gamma(BufferedImage original) {
+    public void gamma(JDesktopPane rp, BufferedImage original) {
      
         int alpha, red, green, blue;
         int newPixel;
 
-        String StringGamma = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo");
-        double gamma = Double.parseDouble(StringGamma);  
-        double gamma_new = 1 / gamma;
+        String StringGamma = JOptionPane.showInternalInputDialog(rp, "Introduzca de [1 a 4] el nivel de gamma");
+       
+        double gamma = (Double.parseDouble(StringGamma));  
+        double gamma_new = gamma;
 
         BufferedImage gamma_cor = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
 

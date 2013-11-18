@@ -363,7 +363,7 @@ public class main extends javax.swing.JFrame {
         //Se crea una nueva ventana con la imagen original y se le aplica el B&W
         JInternalFrame1 gamma_ji = new JInternalFrame1();
         gamma_ji.Ji_abrir_imagen(img);
-        gamma_ji.Ji_gamma();
+        gamma_ji.Ji_gamma(dp);
         
         dp.add(gamma_ji);
         

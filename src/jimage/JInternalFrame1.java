@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import org.jfree.chart.*;
@@ -232,9 +233,9 @@ public void Ji_abrir_imagen (BufferedImage img){
         JLabel_set_imagen();   
     }
     
-    public void Ji_gamma(){
+    public void Ji_gamma(JDesktopPane dp){
         pixel_imagen tmp = new pixel_imagen();
-        tmp.gamma(imagen);
+        tmp.gamma(dp,imagen);
         JLabel_set_imagen();   
     }
     
