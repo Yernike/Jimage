@@ -1,3 +1,5 @@
+package jimage;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,12 +13,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 
 
@@ -36,12 +45,30 @@ public class main extends javax.swing.JFrame {
         initComponents();
         dp = new JDesktopPane();
         dp.setVisible(true);
+        
         this.setContentPane(dp);
+       // addEventos();
+        //jLabel2.setVerticalAlignment();
+        jLabel2.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        jLabel2.setText("");
+        dp.add(jLabel2);
         //his.setExtendedState(MAXIMIZED_BOTH);
          
                
     }
-
+ /*public void addEventos(){
+    
+        addMouseMotionListener(new MouseMotionAdapter(){
+             @Override
+            public void mouseMoved(MouseEvent evento){
+                  JInternalFrame1 ji = (JInternalFrame1) dp.getSelectedFrame();
+                  Point p = MouseInfo.getPointerInfo().getLocation();
+              jLabel2.setText(String.format("Sus coordenadas son [%d, %d]",
+                  //getX y getY devuelve valores de las coordenadas del puntero.
+                     p.x,p.y));            }
+         });
+ }*/
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,6 +78,7 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -60,16 +88,22 @@ public class main extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Jimage - Procesamiento digital de imágenes");
         setAlwaysOnTop(true);
+        setLocationByPlatform(true);
+
+        jLabel2.setBackground(java.awt.Color.lightGray);
+        jLabel2.setText("jLabel2");
+        jLabel2.setName("label_posX"); // NOI18N
+        jLabel2.setOpaque(true);
 
         jMenu1.setText("Archivo");
 
@@ -124,14 +158,14 @@ public class main extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem7);
-        jMenuItem8.setText("Info de imagen");       
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+
+        jMenuItem15.setText("Info de la imagen");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                jMenuItem15ActionPerformed(evt);
             }
         });
-        
-        jMenu2.add(jMenuItem8);
+        jMenu2.add(jMenuItem15);
 
         jMenuBar1.add(jMenu2);
 
@@ -145,26 +179,29 @@ public class main extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem5);
 
-        jMenuItem9.setText("Brillo"); //Contraste
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem14.setText("Brillo / Contraste");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                jMenuItem14ActionPerformed(evt);
             }
         });
-        
-        jMenu3.add(jMenuItem9);
-        
-        jMenuItem11.setText("Contraste"); //Contraste
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem11);
-        
+        jMenu3.add(jMenuItem14);
 
         jMenuItem10.setText("Entropía");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
+
+        jMenuItem12.setText("Gamma");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem12);
 
         jMenuBar1.add(jMenu3);
 
@@ -174,11 +211,13 @@ public class main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 551, Short.MAX_VALUE)
+                .addComponent(jLabel2))
         );
 
         pack();
@@ -198,8 +237,9 @@ public class main extends javax.swing.JFrame {
         // ARCHIVO -> ABRIR
         JInternalFrame1 jif1 = new JInternalFrame1();
         jif1.Ji_abrir_imagen(null);
+        jif1.addEventos(jLabel2);
+        dp.add(jif1, BorderLayout.CENTER);
         
-        dp.add(jif1);
         
         try {
             jif1.setSelected(true);
@@ -236,13 +276,13 @@ public class main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // VER -> DIAGRAMA ABSOLUTO
          JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
         JInternalFrame1 jif1 = new JInternalFrame1(tji.imagen);
         jif1.Ji_histograma_abs();
         dp.add(jif1);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }                                          
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
        // SALIR
@@ -259,7 +299,7 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
     
     
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {                                           
     	//HERRAMIENTAS -> Convertir a escala de grises
         JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
         BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
@@ -275,9 +315,9 @@ public class main extends javax.swing.JFrame {
         brillo_ji.Ji_brillo();
         
         dp.add(brillo_ji);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }                                          
     
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         
         // AQUIIIIIIIIII
         
@@ -288,7 +328,7 @@ public class main extends javax.swing.JFrame {
 
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-    	//HERRAMIENTAS -> Convertir a escala de grises
+    	//HERRAMIENTAS -> Contraste
         JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
         BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
         
@@ -304,6 +344,61 @@ public class main extends javax.swing.JFrame {
         
         dp.add(contraste_ji);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // HERRAMIENTAS -> GAMMA
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        BufferedImage img = new BufferedImage(tji.imagen.getWidth(),tji.imagen.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        //Creo una copia de BufferedImage
+        Graphics g = img.createGraphics();
+        g.drawImage(tji.imagen, 0, 0, null);
+        g.dispose();
+        
+        //Se crea una nueva ventana con la imagen original y se le aplica el B&W
+        JInternalFrame1 gamma_ji = new JInternalFrame1();
+        gamma_ji.Ji_abrir_imagen(img);
+        gamma_ji.Ji_gamma();
+        
+        dp.add(gamma_ji);
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // HERRAMIENTAS -> ENTROPIA
+       
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        pixel_imagen tmp = new pixel_imagen();
+        double entropia = tmp.entropia(tji.imagen);
+        JOptionPane.showInternalMessageDialog(dp, "Entropia: "+entropia); 
+        
+  
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // HERRAMIENTAS -> BRILLO / CONTRASTE
+       JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+       JInternalOption slide = new JInternalOption(tji);
+       slide.setVisible(true);
+        dp.add(slide);
+        
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // VER -> Info de la imagen
+        JInternalFrame1 tji = (JInternalFrame1) dp.getSelectedFrame();
+        pixel_imagen pi = new pixel_imagen();
+        int tama1 = pi.width(tji.imagen);
+        int tama2 = pi.height(tji.imagen); 
+        int rangMenor = pi.ranMenor(tji.imagen);
+        int rangMayor = pi.ranMayor(tji.imagen);
+        JOptionPane.showInternalMessageDialog(dp, "Tamanio: " +tama1+ " x "+tama2+""
+                + "\nRango de valores:  ["+rangMenor+"]"+"["+rangMayor+"]"
+                + "\nBrillo medio: " + pi.getBrillo(tji.imagen)
+                + "\nContraste medio: " + pi.getContraste(tji.imagen)); 
+    
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
     
     
     
@@ -344,20 +439,21 @@ public class main extends javax.swing.JFrame {
     }
     //private javax.swing.JFileChooser jFileChooser1;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

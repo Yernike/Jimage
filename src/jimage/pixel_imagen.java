@@ -1,3 +1,5 @@
+package jimage;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -14,6 +16,7 @@
  */
 
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JOptionPane;
@@ -68,19 +71,50 @@ public class pixel_imagen {
     return acu_array;
     
     }
+   public double getBrillo(BufferedImage img){
+        double brill=0;
+        int histogramaAbs[] = img_get_histogramaAbs(img);
+        for (int i=0; i<histogramaAbs.length; i++){
+            brill += histogramaAbs[i]*i;
+        
+        }
+        return brill/(width(img)*height(img));
+    }
+    public double getContraste(BufferedImage img){
+    double contr=0;
+    int histogramaAbs[] = img_get_histogramaAbs(img);
+    for (int i=0; i<histogramaAbs.length; i++){
+        contr += Math.pow(i-getBrillo(img), 2)* histogramaAbs[i];
+
+    }
+    return Math.sqrt(contr / (width(img)*height(img)));
+}
     
     public void brillo (BufferedImage img){
-    	
         String StringBrillo = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo");
-        double brillo = Double.parseDouble(StringBrillo);
-        brillo = brillo / 100;
-        double pBrillo = 0.0;
-        double[] iArray = null;
+        brilloContraste (img, img, Double.parseDouble(StringBrillo),0);
+                
+    }
+    
+    public void brilloContraste (BufferedImage img, BufferedImage dest_image, double br, double cr){
+    	
+        //String StringBrillo = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo");
+        //double brillo = Double.parseDouble(StringBrillo);
+       // double brillo = br / 100;
+        //double brillo = 2.56 * br;
+        double original= 0.0;
+        double A = cr / getContraste(img);
+        double B = br - A * getBrillo(img);
+        
+        //double brillo = br / 100;
+      int pBrillo = 0;
+      double[] iArray = null;
         
         for (int x=0; x<img.getRaster().getWidth(); x++){
             for (int y=0; y<img.getRaster().getHeight(); y++){
             	iArray = img.getRaster().getPixel(x, y, iArray);
-            	pBrillo = brillo * iArray[0];
+            	pBrillo = (int)(Math.round((A * iArray[0]) + B));
+                //pBrillo = brillo * iArray[0];
                 
                 if (pBrillo > 255)
                     pBrillo = 255;
@@ -90,16 +124,23 @@ public class pixel_imagen {
                iArray[0] = pBrillo;
                iArray[1] = pBrillo;
                iArray[2] = pBrillo;
-               img.getRaster().setPixel(x, y, iArray);
+               dest_image.getRaster().setPixel(x, y, iArray);
             	
             }
         }
     	
     }
     
-    public void contraste (BufferedImage img){
+     public void contraste (BufferedImage img){
         String StringContraste = JOptionPane.showInputDialog("Introduzca el nivel de Contraste (+ aumentar) (- disminuir)");
-        double contraste = Double.parseDouble(StringContraste);
+        contraste (img, img, Double.parseDouble(StringContraste));
+                
+    }
+     
+    public void contraste (BufferedImage img, BufferedImage dest_img, double con){
+        //String StringContraste = JOptionPane.showInputDialog("Introduzca el nivel de Contraste (+ aumentar) (- disminuir)");
+        double contraste = con;
+        //double contraste = 2.56 * con;
         double pContraste = 0.0;
         double[] iArray = null;
         
@@ -116,20 +157,77 @@ public class pixel_imagen {
                iArray[0] = pContraste;
                iArray[1] = pContraste;
                iArray[2] = pContraste;
-               img.getRaster().setPixel(x, y, iArray);
+               dest_img.getRaster().setPixel(x, y, iArray);
             	
             }
-        }
-    	
-        
-        
-        
-        
+        }    
         
  
     }
         
-        
+    public void gamma(BufferedImage original) {
+     
+        int alpha, red, green, blue;
+        int newPixel;
+
+        String StringGamma = JOptionPane.showInputDialog("Introduzca el % de nivel de brillo");
+        double gamma = Double.parseDouble(StringGamma);  
+        double gamma_new = 1 / gamma;
+
+        BufferedImage gamma_cor = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
+
+        for(int i=0; i<original.getWidth(); i++) {
+        for(int j=0; j<original.getHeight(); j++) {
+ 
+            // Get pixels by R, G, B
+            alpha = new Color(original.getRGB(i, j)).getAlpha();
+            red = new Color(original.getRGB(i, j)).getRed();
+            green = new Color(original.getRGB(i, j)).getGreen();
+            blue = new Color(original.getRGB(i, j)).getBlue();
+ 
+            red = (int) (255 * (Math.pow((double) red / (double) 255, gamma_new)));
+            green = (int) (255 * (Math.pow((double) green / (double) 255, gamma_new)));
+            blue = (int) (255 * (Math.pow((double) blue / (double) 255, gamma_new)));
+ 
+            // Return back to original format
+            newPixel = colorToRGB(alpha, red, green, blue);
+ 
+            // Write pixels into image
+            original.setRGB(i, j, newPixel);
+        }
+    }
+    
+    //original = gamma_cor;
+    
+ 
+}   
+     private static int colorToRGB(int alpha, int red, int green, int blue) {
+ 
+        int newPixel = 0;
+        newPixel += alpha;
+        newPixel = newPixel << 8;
+        newPixel += red; newPixel = newPixel << 8;
+        newPixel += green; newPixel = newPixel << 8;
+        newPixel += blue;
+ 
+        return newPixel;
+ 
+    }
+     
+     public double entropia (BufferedImage original) {
+   	 double prob = 0.0;
+   	 double ent = 0.0;
+         int[] histograma_abs =img_get_histogramaAbs(original);
+   	 double size = original.getWidth() * original.getHeight();
+   	 for (int i = 0; i < histograma_abs.length; ++i) {
+   		 if (histograma_abs[i] != 0) {
+   			 prob = histograma_abs[i] / size;
+   			 ent += (-prob * (Math.log10(prob) / Math.log10(2)));
+   		 }
+   	 }
+   	 return ent;
+    }
+
         
      public void tamanyo (BufferedImage img){
          int tam = 0;
@@ -143,10 +241,53 @@ public class pixel_imagen {
                 
             }
          }
-         
+           
+     }
+     
+
+ public int width (BufferedImage img){
+         int tam = img.getWidth(); // * getRefBufImg().getHeight();         
+         return tam;
          
          
      }
+     
+public int height (BufferedImage img){
+   int tam = img.getHeight(); // * getRefBufImg().getHeight();         
+   return tam;
+
+
+}
+            
+     public int ranMenor (BufferedImage img){
+         double rang = 255;
+         double[] iArray = null;
+         for (int x=0; x<img.getRaster().getWidth(); x++){
+            for (int y=0; y<img.getRaster().getHeight(); y++){
+                if (rang > img.getRaster().getPixel(x, y, iArray)[0]){ 
+                    rang = img.getRaster().getPixel(x, y, iArray)[0];
+                }
+            } 
+     }
+         return (int)rang;
+     
+        
+}
+     
+     public int ranMayor (BufferedImage img){
+         double rang = 0;
+         double[] iArray = null;
+         for (int x=0; x<img.getRaster().getWidth(); x++){
+            for (int y=0; y<img.getRaster().getHeight(); y++){
+                if (rang < img.getRaster().getPixel(x, y, iArray)[0]){ 
+                    rang = img.getRaster().getPixel(x, y, iArray)[0];
+                }
+            } 
+     }
+         return (int) rang;
+     
+        
+}
         
 }
     
