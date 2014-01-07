@@ -17,6 +17,7 @@ package jimage;
 
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JDesktopPane;
 
@@ -171,7 +172,7 @@ public class pixel_imagen {
         int alpha, red, green, blue;
         int newPixel;
 
-        String StringGamma = JOptionPane.showInternalInputDialog(rp, "Introduzca de [1 a 4] el nivel de gamma");
+        String StringGamma = JOptionPane.showInternalInputDialog(rp, "Introduzca el nivel de gamma");
        
         double gamma = (Double.parseDouble(StringGamma));  
         double gamma_new = gamma;
@@ -326,6 +327,120 @@ public int height (BufferedImage img){
          
          
      }
+     
+ public static void espejo_vertical(BufferedImage img) {
+	//para alto par
+        double [] iArray= null;
+	if(img.getRaster().getHeight()%2 == 0) {
+		
+		for( int i = 0, k = img.getRaster().getHeight()-1; i < k; i++, k--) {
+			for (int j = 0 ,l = 0; j < img.getRaster().getWidth() ;j++, l++) {		
+				double[] x = img.getRaster().getPixel(j, i,iArray);
+				double[] y = img.getRaster().getPixel(l, k,iArray);
+				img.getRaster().setPixel(j, i, y);
+				img.getRaster().setPixel(l, k, x);
+			}			
+		}
+	}
+	//para alto impar
+	else {
+		for( int i = 0, k = img.getRaster().getHeight()-1; i != k; i++, k--) {
+			for (int j = 0 ,l = 0; j < img.getRaster().getWidth() ;j++, l++) {		
+				double[] x = img.getRaster().getPixel(i, j, iArray);
+				double[] y = img.getRaster().getPixel(k, l, iArray);
+				img.getRaster().setPixel(i, j, y);
+				img.getRaster().setPixel(k, l, x);
+			}			
+		}
+	}		
+}
+
+     public static void espejo_horizontal(BufferedImage img) {
+	//para ancho par
+        double [] iArray= null;
+	if(img.getRaster().getWidth()%2 == 0) {
+		
+		for( int i = 0, k = img.getRaster().getWidth()-1; i < k; i++, k--) {
+			for (int j = 0 ,l = 0; j < img.getRaster().getHeight() ;j++, l++) {		
+				double[] x = img.getRaster().getPixel(i, j,iArray);
+				double[] y = img.getRaster().getPixel(k, l,iArray);
+				img.getRaster().setPixel(i, j, y);
+				img.getRaster().setPixel(k, l, x);
+			}			
+		}
+	}
+	//para ancho impar
+	else {
+		for( int i = 0, k = img.getRaster().getWidth()-1; i != k; i++, k--) {
+			for (int j = 0 ,l = 0; j < img.getRaster().getHeight() ;j++, l++) {		
+				double[] x = img.getRaster().getPixel(i, j, iArray);
+				double[] y = img.getRaster().getPixel(k, l, iArray);
+				img.getRaster().setPixel(i, j, y);
+				img.getRaster().setPixel(k, l, x);
+			}			
+		}
+	}		
+}
+
+
+
+   BufferedImage traspuesta (BufferedImage img){
+        double[] iArray = null;
+        BufferedImage image = new BufferedImage(img.getHeight(),img.getWidth(),BufferedImage.TYPE_INT_RGB);
+        
+        int w = img.getRaster().getHeight()-1;
+        for (int x=0; x<img.getRaster().getWidth(); x++){
+             for (int y=0; y<img.getRaster().getHeight(); y++){
+                 iArray = img.getRaster().getPixel(x, y, iArray);
+                 image.getRaster().setPixel(y, x, iArray);
+            }
+        }
+        return image;
+    }
+
+   BufferedImage rotar90 (BufferedImage img){
+        double[] iArray = null;
+        BufferedImage image = new BufferedImage(img.getHeight(),img.getWidth(),BufferedImage.TYPE_INT_RGB);
+        
+        int w = img.getRaster().getHeight()-1;
+        for (int x=0; x<img.getRaster().getWidth(); x++){
+             for (int y=0; y<img.getRaster().getHeight(); y++){
+                 iArray = img.getRaster().getPixel(x, y, iArray);
+                 image.getRaster().setPixel(w-y, x, iArray);
+            }
+        }
+        return image;
+    }
+
+    BufferedImage rotar180 (BufferedImage img){
+        double[] iArray = null;
+        BufferedImage image = new BufferedImage(img.getWidth(),img.getHeight(),BufferedImage.TYPE_INT_RGB);
+     
+        int w = img.getRaster().getWidth()-1;
+        int h = img.getRaster().getHeight()-1;
+        for (int x=0; x<img.getRaster().getWidth(); x++){
+             for (int y=0; y<img.getRaster().getHeight(); y++){
+                 iArray = img.getRaster().getPixel(x, y, iArray);
+                 image.getRaster().setPixel(w-x, h-y, iArray);
+            }
+        }
+        return image;
+    }
+
+    BufferedImage rotar270 (BufferedImage img){
+        double[] iArray = null;
+        BufferedImage image = new BufferedImage(img.getHeight(),img.getWidth(),BufferedImage.TYPE_INT_RGB);
+     
+        int w = img.getRaster().getWidth()-1;
+        for (int x=0; x<img.getRaster().getWidth(); x++){
+             for (int y=0; y<img.getRaster().getHeight(); y++){
+                 iArray = img.getRaster().getPixel(x, y, iArray);
+                 image.getRaster().setPixel(y, x, iArray);
+            }
+        }
+        return image;
+    }
+
         
 }
     

@@ -77,7 +77,7 @@
     </Component>
     <Component class="javax.swing.JSlider" name="jSlider2">
       <Properties>
-        <Property name="maximum" type="int" value="127"/>
+        <Property name="maximum" type="int" value="255"/>
         <Property name="paintLabels" type="boolean" value="true"/>
         <Property name="paintTicks" type="boolean" value="true"/>
         <Property name="snapToTicks" type="boolean" value="true"/>

@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
@@ -43,6 +44,8 @@ import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 
@@ -157,12 +160,17 @@ public JInternalFrame1(BufferedImage img) {
         //this.setVisible(true);
         //addMouseMotionListener();
         //addMouseListener();
+        
 }
 
+public void setSize(int width, int height){
+    super.setSize(width+12, height+31);
+    
+}
 private void recortar (){
     imagen = imagen.getSubimage(x, y, ancho, alto);
     JLabel_set_imagen();
-    this.setSize(imagen.getHeight(), imagen.getWidth());
+    this.setSize(imagen.getWidth(),imagen.getHeight());
 }
 public void Ji_abrir_imagen (BufferedImage img){
     title = "ImagenSinTitulo";
@@ -253,6 +261,7 @@ public void Ji_abrir_imagen (BufferedImage img){
         Ji_draw_histograma(hist, "Histograma Acumulativo");
         
     }
+      
     public void Ji_draw_histograma(int[] hist, String titulo){
     
         ChartPanel panel;
@@ -294,6 +303,124 @@ public void Ji_abrir_imagen (BufferedImage img){
         this.add(panel);
         this.repaint();
         
+    }
+    
+    public void Ji_espejo_horizontal(){
+        pixel_imagen tmp = new pixel_imagen();
+        tmp.espejo_horizontal(imagen);
+        JLabel_set_imagen();   
+        
+    }
+    public void Ji_espejo_vertical(){
+        pixel_imagen tmp = new pixel_imagen();
+        tmp.espejo_vertical(imagen);
+        JLabel_set_imagen();   
+        
+    }
+    public void Ji_rotar90(){
+        pixel_imagen tmp = new pixel_imagen();
+        imagen = tmp.rotar90(imagen);
+        JLabel_set_imagen(); 
+        this.setSize(imagen.getWidth(),imagen.getHeight());
+        
+    }
+    public void Ji_rotar180(){
+       pixel_imagen tmp = new pixel_imagen();
+        imagen = tmp.rotar180(imagen);
+        JLabel_set_imagen(); 
+        this.setSize(imagen.getWidth(),imagen.getHeight());
+        
+    }
+    public void Ji_rotar270(){
+         pixel_imagen tmp = new pixel_imagen();
+        imagen = tmp.rotar270(imagen);
+        JLabel_set_imagen(); 
+        this.setSize(imagen.getWidth(),imagen.getHeight()); 
+        
+    }
+    public void Ji_traspuesta(){
+         pixel_imagen tmp = new pixel_imagen();
+        imagen = tmp.traspuesta(imagen);
+        JLabel_set_imagen(); 
+        this.setSize(imagen.getWidth(),imagen.getHeight()); 
+        
+    }
+     public void Ji_rotar(JDesktopPane rp){
+       
+         geometrica tmp = new geometrica();
+         String StringGrados = JOptionPane.showInternalInputDialog(rp, "Introduzca los grados a girar");
+         
+         String[] options = {"Bilineal", "Vecino mas próximo", "Ninguna",};
+         int code = JOptionPane.showInternalOptionDialog(rp, "Seleccione el tipo de interpolacion", 
+         "Seleccion", 0, JOptionPane.QUESTION_MESSAGE, null, options,null);
+         
+        imagen = tmp.rotar(imagen, Double.parseDouble(StringGrados), code);
+        
+        JLabel_set_imagen();
+        
+        this.setSize(imagen.getWidth(),imagen.getHeight());
+ 
+        
+    
+     }
+     public void Ji_escalar(JDesktopPane rp){
+       
+         geometrica tmp = new geometrica();
+         // MENSAJE 2 PARAMETROS
+      JTextField wField = new JTextField(3);
+      wField.setText("100");
+      JTextField hField = new JTextField(3);
+      hField.setText("100");
+
+      JPanel myPanel = new JPanel();
+      myPanel.add(new JLabel("Ancho:"));
+      myPanel.add(wField);
+      myPanel.add(new JLabel("%"));
+      myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+      myPanel.add(new JLabel("Alto:"));
+      myPanel.add(hField);
+      myPanel.add(new JLabel("%"));
+
+      int result = JOptionPane.showInternalConfirmDialog(rp, myPanel, 
+               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+      String[] options = {"Bilineal", "Vecino mas próximo"};
+      
+         int code = JOptionPane.showInternalOptionDialog(rp, "Seleccione el tipo de interpolacion", 
+         "Seleccion", 0, JOptionPane.QUESTION_MESSAGE, null, options,null);
+         
+      if (result == JOptionPane.OK_OPTION) {
+        imagen= tmp.escalar(imagen, 
+                Integer.parseInt(wField.getText()), 
+                Integer.parseInt(hField.getText()), 
+                code);
+      }
+         ////////////////////////////////////////////
+        
+        JLabel_set_imagen();
+        
+        this.setSize(imagen.getWidth(),imagen.getHeight());
+        
+        
+        
+    
+     }
+    public void Ji_especifica_histo(){
+    
+    open_save_image a = new open_save_image();
+    pixel_imagen tmp = new pixel_imagen();
+    especificacionH esp = new especificacionH();
+    BufferedImage img2= a.abrir_imagen();
+    
+    int []h_img1 = tmp.img_get_histogramaAcu(imagen);
+    int []h_img2 = tmp.img_get_histogramaAcu(img2);
+    imagen = esp.especificacionH(imagen, h_img1, h_img2);
+    JLabel_set_imagen();
+    
+    
+    
+    
+    
+    
     }
     
     

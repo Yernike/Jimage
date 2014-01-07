@@ -78,7 +78,7 @@ public class JInternalOption extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Brillo");
 
-        jSlider2.setMaximum(127);
+        jSlider2.setMaximum(255);
         jSlider2.setPaintLabels(true);
         jSlider2.setPaintTicks(true);
         jSlider2.setSnapToTicks(true);
